@@ -63,7 +63,7 @@ export const profile: {
   location: "Jakarta, Indonesia",
   email: "yodha.pratama@gmail.com",
   github: "https://github.com/yodhasu",
-  linkedin: "https://linkedin.com/in/yodha-pratama",
+  linkedin: "https://linkedin.com/in/yodhapratama",
   avatar: "https://avatars.githubusercontent.com/u/127666231?v=4",
   cvPath: "/ATS_Friendly_Technical_Resume-5.pdf",
   headline: "I build web systems, AI experiments, and creative learning tools.",
