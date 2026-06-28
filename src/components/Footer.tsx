@@ -12,7 +12,7 @@ export default function Footer() {
         </div>
         
         <p className="footer-copyright">
-          © {currentYear} {profile.name}. All rights reserved.
+          © {currentYear} {profile.name} // Yodha Workspace. All rights reserved.
         </p>
 
         <div className="footer-meta-block text-right">

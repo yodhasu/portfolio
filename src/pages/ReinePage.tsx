@@ -1,9 +1,10 @@
 import { useEffect } from "react";
-import { ArrowLeft, BrainCircuit, ShieldCheck, Scale, AlertTriangle, Cpu } from "lucide-react";
+import { ArrowLeft, BrainCircuit, ShieldCheck, Scale, AlertTriangle, Cpu, HelpCircle, Activity, Sparkles, Terminal } from "lucide-react";
 import { motion } from "framer-motion";
 import { reinePaperDetails } from "../content";
 import AnimatedDiagram from "../components/AnimatedDiagram";
 import AnimatedSection from "../components/AnimatedSection";
+import SectionHeader from "../components/SectionHeader";
 
 type ReinePageProps = {
   onNavigate: (route: string) => void;
@@ -42,117 +43,225 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
         </a>
         <div className="header-status-pill">
           <span className="pulse-dot"></span>
-          <span>LAB_REPORT_01 // ReINE</span>
+          <span>Yodha Workspace // Personal Lab Note 01</span>
         </div>
       </header>
 
       <main className="reine-main-content">
-        <AnimatedSection className="reine-hero-section">
-          <span className="section-mono-kicker">RESEARCH EXPLATORIUM</span>
-          <h1 className="reine-title">{details.title}</h1>
-          <p className="reine-authors-list">
-            By: {details.authors.join(" | ")}
-          </p>
-          <div className="abstract-card">
-            <h3>Abstract</h3>
-            <p>{details.abstract}</p>
-          </div>
-        </AnimatedSection>
+        
+        {/* HERO AREA: Title, plain English intro and illustration slot */}
+        <section className="reine-hero-grid">
+          <AnimatedSection className="reine-hero-intro-column">
+            <span className="section-mono-kicker text-cyan">ReINE — Research Explainer</span>
+            <h1 className="reine-title">Residual Information Network Editing for Persona Steering</h1>
+            <p className="reine-authors-list">
+              By: {details.authors.join(" | ")}
+            </p>
+            <div className="font-mono text-slate-400 text-xs mt-1 mb-4 opacity-75">
+              // STATUS: In Submission (Preprint Draft) // DOI: TBA
+            </div>
 
-        {/* Intuition Section */}
+            <div className="what-is-reine-card">
+              <span className="card-mono-label text-cyan">// WHAT IS ReINE? (PLAIN ENGLISH)</span>
+              <h3>activation-space persona steering</h3>
+              <p>
+                Normally, to give an AI a persona, you either stuff its prompt with rules (which it forgets over long chats) or fine-tune all its parameters (which ruins its general capabilities).
+              </p>
+              <p>
+                <strong>ReINE</strong> bypasses weight edits entirely. We keep the base model 100% frozen and intercept its internal thinking stream using PyTorch forward hooks. By training tiny, surgical adapters in early residual layers (layers 0–4), we steer the model's identity from the inside out.
+              </p>
+              <div className="lab-margin-note">
+                // BUILDER NOTE: This started as “what if we steer the model from the inside instead of begging through prompts?”
+              </div>
+            </div>
+          </AnimatedSection>
+
+          {/* Reserved Specimen Display / visual codename motif slot */}
+          <AnimatedSection className="reine-hero-visual-column" direction="right" delay={0.15}>
+            <motion.div 
+              className="specimen-frame-container"
+              whileHover={{ scale: 1.015 }}
+            >
+              {/* Corner markers */}
+              <span className="blueprint-corner tl">+</span>
+              <span className="blueprint-corner tr">+</span>
+              <span className="blueprint-corner bl">+</span>
+              <span className="blueprint-corner br">+</span>
+              <div className="blueprint-grid-overlay"></div>
+              
+              {/* Abstract peafowl vector watermark (subtle stroke) */}
+              <svg viewBox="0 0 100 100" className="peafowl-vector-watermark">
+                <path d="M50 20 C60 40, 70 50, 80 80 C60 70, 40 70, 20 80 C30 50, 40 40, 50 20 Z" fill="none" stroke="rgba(91,174,255,0.04)" strokeWidth="1" />
+                <circle cx="50" cy="40" r="15" fill="none" stroke="rgba(139,124,246,0.03)" strokeWidth="0.5" />
+              </svg>
+
+              <div className="specimen-frame-content">
+                <img src="/reine_sketch.png" className="specimen-sketch-img" alt="ReINE Sketch" />
+                <span className="specimen-title font-mono text-sm sm:text-base text-cyan tracking-wide">CODENAME MOTIF / hand-drawn ReINE sketch</span>
+                
+                <div className="specimen-indicator-light mt-4">
+                  <span className="indicator-pulse"></span>
+                  <span className="indicator-label font-mono">SYS_MOTIF // LOADED</span>
+                </div>
+              </div>
+              
+              <span className="specimen-tag font-mono">// visual codename motif</span>
+            </motion.div>
+          </AnimatedSection>
+        </section>
+
+        {/* TL;DR in 4 cards */}
+        <section className="tldr-grid-section">
+          <SectionHeader kicker="At a Glance" title="TL;DR in 4 Pillars" />
+          <div className="tldr-cards-row">
+            
+            <div className="tldr-card">
+              <span className="tldr-card-num font-mono">01</span>
+              <h3>Frozen Host</h3>
+              <p>Keep the 4B parameter model completely frozen. Save weights, reduce training risks, and preserve base capacities.</p>
+              <span className="tldr-card-note font-mono">// host: Qwen3-4B-Thinking</span>
+            </div>
+
+            <div className="tldr-card">
+              <span className="tldr-card-num font-mono">02</span>
+              <h3>MicroAdapters</h3>
+              <p>Train tiny bottleneck adapters ($r=16$, initialized to zero) that inject activation perturbations via forward hooks.</p>
+              <span className="tldr-card-note font-mono">// parameters: 409k trained</span>
+            </div>
+
+            <div className="tldr-card">
+              <span className="tldr-card-num font-mono">03</span>
+              <h3>Lower Intervention</h3>
+              <p>Depth matters. The bottom third (layers 0–4) is the sweet spot for identity. Upper layers distort generation.</p>
+              <span className="tldr-card-note font-mono">// location: bottom-third</span>
+            </div>
+
+            <div className="tldr-card">
+              <span className="tldr-card-num font-mono">04</span>
+              <h3>Identity Steering</h3>
+              <p>Achieves 30/30 (100%) zero-shot accuracy, resisting adversarial inputs and prompt jailbreaks.</p>
+              <span className="tldr-card-note font-mono">// benchmark: 15-prompt stress test</span>
+            </div>
+
+          </div>
+        </section>
+
+        {/* Section 1: Intuition */}
         <AnimatedSection className="paper-section-block">
           <div className="section-number">01</div>
-          <h2>The Problem & Core Intuition</h2>
+          <h2>The Madness, the Method, the Math</h2>
+          
           <div className="content-grid-split">
-            <div>
+            <div className="explainer-paragraphs">
               <p>
-                Controlling identity, persona, and style in large language models is notoriously unstable. 
-                Standard prompt engineering is highly vulnerable to prompt injections or context drift, while 
-                traditional weight fine-tuning alters base weights, risking catastrophic forgetting or 
-                damaging core reasoning capabilities.
+                Steering language model behavior without retraining weights is a balancing act. Prompt injection is a band-aid—users easily bypass it with clever jailbreaks. Fine-tuning, on the other hand, is brain surgery—too expensive and highly prone to parameter collapse.
               </p>
               <p>
-                <strong>ReINE (Residual Information Network Editing)</strong> proposes a weight-preserving solution. 
-                Instead of rewriting model weights, ReINE attaches trainable low-rank <strong>MicroAdapters</strong> to 
-                intermediate layers of a frozen host model using PyTorch forward hooks. During inference, these adapters 
-                inject additive residual perturbations directly into the internal hidden activation stream, 
-                steering the model's output persona from the inside out.
+                <strong>ReINE</strong> posits that we can seed identity bias at the earliest residual stages of computation. By adding small, learned vectors to the activation layers, the representation cascades down the transformer pipeline, guiding final generations without modifying a single host parameter.
               </p>
+
+              <div className="lab-note-box violet">
+                <span className="lab-note-header font-mono">
+                  <Activity size={12} /> // LAB NOTE: Why this matters
+                </span>
+                <p>
+                  Early residual layers refine coarse representation bounds, while later layers specialize in token choices. Steering early seeds the bias at the source, allowing the frozen model to refine the syntax naturally.
+                </p>
+              </div>
             </div>
+
             <div className="formula-box">
               <span className="formula-label">ACTIVATION_HOOK_EQUATION</span>
               <div className="equation">
                 h<sup>(ℓ)</sup><sub>out</sub> = h<sup>(ℓ)</sup><sub>in</sub> + s<sup>(ℓ)</sup> · f<sub>θ</sub>(h<sup>(ℓ)</sup><sub>in</sub>)
               </div>
-              <p className="formula-desc">
-                The adapter output is scaled by a learned parameter <em>s</em> and added directly back to the 
-                residual stream of layer ℓ.
+              <p className="formula-desc font-mono">
+                h_in: input hidden state at layer ℓ<br />
+                s: learned layer-scale factor<br />
+                f_θ: low-rank bottleneck adapter (W_down → Dropout → W_up)
               </p>
             </div>
           </div>
         </AnimatedSection>
 
-        {/* Architecture Section */}
+        {/* Section 2: Blueprint */}
         <AnimatedSection className="paper-section-block">
           <div className="section-number">02</div>
-          <h2>MicroAdapter Architecture</h2>
-          <p>
-            Each MicroAdapter is a bottleneck projection consisting of a down-projection matrix <em>W<sub>down</sub></em> and 
-            an up-projection matrix <em>W<sub>up</sub></em>. Crucially, <em>W<sub>up</sub></em> is initialized to all zeroes at 
-            the start of training. This ensures that the adapted model's behavior starts exactly identical to the 
-            base frozen model, preventing initial network disruption.
+          <h2>The Blueprint: Shallow Intervention Map</h2>
+          
+          <p className="section-intro-lead">
+            We tap into the network's active stream while it's running. Instead of altering weights, we inject trainable MicroAdapters at specific layer hook locations. 
           </p>
+          <div className="lab-margin-note violet">
+            // LAB NOTE: The host stays frozen. ReINE only learns residual nudges.
+          </div>
           
           <AnimatedDiagram type="architecture" />
-          
-          <p className="diagram-caption-sub">
-            The adapters are inserted via forward hooks. In the highest-performing configuration (Lower-5+CoT), 
-            hooks are attached exclusively to layers 0 through 4 (the bottom third of the network).
-          </p>
+
+          <div className="blueprint-notes-row">
+            <div className="lab-note-box cyan">
+              <span className="lab-note-header font-mono">
+                <Terminal size={12} /> // LAB NOTE: What stays frozen
+              </span>
+              <p>
+                99.9% of the host model. All attention projection layers, feedforward layers, layer norms, and layers 5–35 remain 100% frozen.
+              </p>
+            </div>
+
+            <div className="lab-note-box violet">
+              <span className="lab-note-header font-mono">
+                <Terminal size={12} /> // LAB NOTE: What actually trains
+              </span>
+              <p>
+                Only the MicroAdapter bottleneck parameters (W_down, W_up) and learned scaling factors (s_L) on layers 0–4.
+              </p>
+            </div>
+          </div>
 
           <AnimatedDiagram type="hook" />
         </AnimatedSection>
 
-        {/* Loss Objective & Stabilization */}
+        {/* Section 3: Training & Anchor Loss */}
         <AnimatedSection className="paper-section-block">
           <div className="section-number">03</div>
           <h2>Training Flow & The Anchor Loss</h2>
+          
           <div className="content-grid-split">
-            <div>
+            <div className="explainer-paragraphs">
               <p>
-                Steering representations in early layers can easily destabilize later transformer representations, 
-                causing the model to write gibberish. ReINE prevents this representation collapse using three loss terms:
+                Adapting activations in early layers can easily destabilize the downstream representations, causing the model to output gibberish. ReINE prevents this representation collapse using an <strong>Anchor Loss regularizer</strong>.
               </p>
-              <ul className="accent-bullet-list">
-                <li>
-                  <strong>Target Cross-Entropy:</strong> Supervised teacher forcing on the target persona tokens.
-                </li>
-                <li>
-                  <strong>KL Divergence Regularization:</strong> Regularizes the output probability distribution of 
-                  the adapted model against the frozen base model to prevent output distribution drift.
-                </li>
-                <li>
-                  <strong>Lower-Layer Anchor Loss:</strong> Runs a reference anchor text through the frozen base 
-                  model, then forces the adapted model's early-layer hidden states to remain close to the reference vectors.
-                </li>
-              </ul>
+              <p>
+                We process reference anchor texts through the frozen model, record the intermediate hidden representations, and calculate the MSE loss against the adapted stream. This anchors early layer states, keeping the network grounded.
+              </p>
+
+              <div className="lab-note-box amber">
+                <span className="lab-note-header font-mono">
+                  <AlertTriangle size={12} /> // LAB NOTE: Where it can fail
+                </span>
+                <p>
+                  Without the Anchor Loss regularizer, downstream representations distort rapidly, cascading into representation collapse. The model begins babbling in endless repetitive loops.
+                </p>
+              </div>
             </div>
+            
             <div>
               <AnimatedDiagram type="anchor" />
             </div>
           </div>
         </AnimatedSection>
 
-        {/* Results section */}
+        {/* Section 4: Experimental Evidence */}
         <AnimatedSection className="paper-section-block">
           <div className="section-number">04</div>
           <h2>Experimental Results & Ablations</h2>
-          <p>
-            The framework was evaluated on zero-shot identity stress tests using <strong>Alibaba Cloud Qwen3-4B-Thinking</strong> 
-            as the frozen host model. The key finding was that steering quality is highly depth-dependent: 
-            shallow lower-layer intervention produces the most stable identity steering, while broad asymmetric 
-            or deep configurations destabilize the network.
+          
+          <p className="section-intro-lead">
+            Below is the empirical breakdown. In this tested setup, shallow lower-layer intervention produced stronger identity binding than broader or later intervention. Extending adapters across the entire network (11-1-1) actually degrades identity binding, while shallow lower layers seed representation bias cleanly.
           </p>
+          <div className="lab-margin-note amber">
+            // SUSPICIOUS FINDING: Lower layers worked better than expected.
+          </div>
 
           <div className="table-wrapper">
             <table className="results-table">
@@ -180,18 +289,21 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
           </div>
 
           <p className="table-caption">
-            * Lower-5+CoT achieves 30/30 (100% accuracy) on a 15-prompt identity stress test.
+            * Lower-5+CoT achieves 30/30 (100% accuracy) on our synthetic zero-shot stress test benchmark.
           </p>
         </AnimatedSection>
 
-        {/* LoRA comparison */}
+        {/* Section 5: VRAM */}
         <AnimatedSection className="paper-section-block">
           <div className="section-number">05</div>
-          <h2>Resource Footprint & LoRA Comparison</h2>
-          <p>
-            ReINE was compared against a standard parameter-efficient weight fine-tuning baseline (LoRA) trained 
-            on the same 665-example dataset.
+          <h2>Resource Footprints: ReINE vs. LoRA</h2>
+          
+          <p className="section-intro-lead">
+            We compared ReINE against a standard parameter-efficient weight fine-tuning baseline (LoRA) trained on the same 665-example dataset. The ReINE vs LoRA comparison applies only to this dataset, host model, and evaluation setup. ReINE used fewer trainable parameters but higher peak VRAM in the current implementation.
           </p>
+          <div className="lab-margin-note coral">
+            // REALITY CHECK: Scoped proof-of-concept. Not a universal LoRA takedown.
+          </div>
 
           <div className="comparison-cards-grid">
             <div className="resource-stat-card lora">
@@ -236,18 +348,27 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             </div>
             <p>
               ReINE achieves its high performance and tiny parameter footprint (409K parameters) at the cost of 
-              <strong>higher peak VRAM (10.34 GB vs LoRA's 8.71 GB)</strong>. Because PyTorch forward hooks are used to 
+              <strong> higher peak VRAM (10.34 GB vs LoRA's 8.71 GB)</strong>. Because PyTorch forward hooks are used to 
               intervene in the hidden stream, the intermediate representations of the host model must remain loaded 
               in GPU memory during the backward pass, increasing memory overhead compared to direct weight updates.
             </p>
+            <div className="alert-code-note">
+{`// LAB NOTE: The adapter was small.
+// The training script was not humble.
+Forward hooks kept extra hidden-state bookkeeping alive, so ReINE used more peak VRAM than expected. Not a theory failure — more like implementation debt wearing a lab coat.`}
+            </div>
           </div>
         </AnimatedSection>
 
-        {/* Limitations section (Strictly scoped) */}
+        {/* Section 6: Limitations */}
         <AnimatedSection className="paper-section-block limitations-block">
           <div className="section-number">06</div>
-          <h2>Limitations & Future Directions</h2>
+          <h2>Reality Check: Limits & Open Issues</h2>
           
+          <p className="section-intro-lead text-cyan font-mono">
+            // SOBRIETY CHECK: ReINE is not a magic bullet. Here is where the methodology binds.
+          </p>
+
           <div className="limitations-container">
             <div className="limit-card">
               <div className="limit-title-row">
@@ -255,8 +376,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <h3>VRAM Hook Overhead</h3>
               </div>
               <p>
-                In the current implementation, using forward hooks prevents memory-efficient backward passes. 
-                Further engineering (such as hook detachment or gradient checkpointing) is needed to mitigate this.
+                In the current implementation, using forward hooks prevents memory-efficient backward passes. Further engineering (such as hook detachment or gradient checkpointing) is needed to mitigate this.
               </p>
             </div>
 
@@ -266,8 +386,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <h3>Semantic Leakage</h3>
               </div>
               <p>
-                In testing, the steered identity markers sometimes bled into unrelated general factual queries, 
-                meaning the model answered standard knowledge questions in the steered persona's voice instead of remaining neutral.
+                In testing, the steered identity markers sometimes bled into unrelated general factual queries, meaning the model answered standard knowledge questions in the steered persona's voice instead of remaining neutral.
               </p>
             </div>
 
@@ -277,10 +396,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <h3>Methodological Boundaries</h3>
               </div>
               <p>
-                The comparison is limited to the tested settings: the LoRA baseline was trained without CoT, 
-                while ReINE Lower-5+CoT was trained with CoT, meaning the performance difference reflects 
-                the combined impact of both variables. Future evaluations should compare both architectures 
-                under identical CoT conditions.
+                The comparison is limited to the tested settings: the LoRA baseline was trained without CoT, while ReINE Lower-5+CoT was trained with CoT, meaning the performance difference reflects the combined impact of both variables. Future evaluations should compare both architectures under identical CoT conditions.
               </p>
             </div>
 
@@ -290,9 +406,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <h3>Single-Host Constraint</h3>
               </div>
               <p>
-                Experiments were conducted exclusively with Alibaba Cloud Qwen3-4B-Thinking. 
-                The generalizability of these ablation results to larger models or models without 
-                native reasoning chains remains to be validated.
+                Experiments were conducted exclusively with Alibaba Cloud Qwen3-4B-Thinking. The generalizability of these ablation results to larger models or models without native reasoning chains remains to be validated.
               </p>
             </div>
           </div>
@@ -300,8 +414,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
 
         <AnimatedSection className="paper-handoff-footer text-center">
           <p>
-            This explainer represents a proof-of-concept summary of the draft paper. The implementation, 
-            training configurations, and full logs are available in the public repository.
+            This explainer represents a proof-of-concept summary of the draft paper. The implementation, training configurations, and full logs are available in the public repository.
           </p>
           <a
             className="action-button-glow"
@@ -316,6 +429,10 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
 
       <footer className="reine-page-footer">
         <p className="footer-mono-text">bina nusantara university // school of computer science // 2026</p>
+        <div className="footer-oshi-note">
+{`// CODENAME: ReINE
+// A tribute to my oshi — and her art of “halu”.`}
+        </div>
       </footer>
     </div>
   );

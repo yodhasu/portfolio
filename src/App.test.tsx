@@ -23,7 +23,7 @@ describe("portfolio app", () => {
     window.history.pushState(null, "", "/");
   });
 
-  it("renders the main studio portfolio with required sections and actions", () => {
+  it("renders the main workspace portfolio with required sections and actions", () => {
     render(<App />);
 
     expect(
@@ -37,6 +37,8 @@ describe("portfolio app", () => {
       "/ATS_Friendly_Technical_Resume-5.pdf"
     );
     expect(screen.queryByText(/\+62-815-958-3273/)).not.toBeInTheDocument();
+    expect(screen.getAllByText(/Yodha Workspace/i).length).toBeGreaterThan(0);
+    expect(screen.getByText(/DOI: TBA \(In Submission\)/i)).toBeInTheDocument();
   });
 
   it("shows the ReINE explainer page at the ReINE route", async () => {
@@ -45,13 +47,19 @@ describe("portfolio app", () => {
     // Click link to open ReINE page
     await userEvent.click(screen.getByRole("link", { name: /Explore Explainer/i }));
 
-    // Verify ReinePage elements
     expect(
       screen.getByRole("heading", { name: /Residual Information Network Editing/i, level: 1 })
     ).toBeInTheDocument();
-    expect(screen.getAllByText(/frozen host model/i)[0]).toBeInTheDocument();
-    expect(screen.getByText(/MicroAdapter Architecture/i)).toBeInTheDocument();
+    expect(screen.getAllByText(/frozen/i)[0]).toBeInTheDocument();
+    expect(screen.getAllByText(/MicroAdapter/i)[0]).toBeInTheDocument();
     expect(screen.getAllByText(/Anchor /i)[0]).toBeInTheDocument();
+    expect(screen.getByText(/Yodha Workspace \/\/ Personal Lab Note 01/i)).toBeInTheDocument();
+    expect(screen.getByText(/ReINE — Research Explainer/i)).toBeInTheDocument();
+    expect(screen.getByText(/CODENAME MOTIF \/ hand-drawn ReINE sketch/i)).toBeInTheDocument();
+    expect(screen.getByText(/A tribute to my oshi — and her art of “halu”\./i)).toBeInTheDocument();
+    expect(screen.getByText(/The adapter was small\./i)).toBeInTheDocument();
+    expect(screen.getByText(/In this tested setup, shallow lower-layer intervention produced stronger identity binding/i)).toBeInTheDocument();
+    expect(screen.getByText(/STATUS: In Submission \(Preprint Draft\) \/\/ DOI: TBA/i)).toBeInTheDocument();
   });
 
   it("opens the mobile navigation menu from the menu button", async () => {

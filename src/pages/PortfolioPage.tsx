@@ -35,7 +35,7 @@ export default function PortfolioPage({ onNavigate }: PortfolioPageProps) {
       <section className="hero-bento-grid">
         {/* Main Intro Card */}
         <AnimatedSection className="bento-card hero-main-card" direction="up">
-          <span className="bento-mono-label">SYS_IDENTITY // PROFILE</span>
+          <span className="bento-mono-label">SYS_IDENTITY // YODHA WORKSPACE</span>
           <h1 className="hero-title">{profile.name}</h1>
           <p className="hero-headline">{profile.headline}</p>
           <p className="hero-intro-text">{profile.intro}</p>
@@ -176,7 +176,7 @@ export default function PortfolioPage({ onNavigate }: PortfolioPageProps) {
 
           <AnimatedSection className="creative-band-widget-container" direction="right">
             <div className="creative-board-card">
-              <span className="card-mono-label text-coral">WORKFLOW_STUDIO // PEDAGOGY</span>
+              <span className="card-mono-label text-coral">WORKFLOW_WORKSPACE // PEDAGOGY</span>
               <div className="pedagogy-value">Observe → Explain → Revise</div>
               <p className="pedagogy-desc">
                 From drawing critique to software validation, the core skill is making the next steps obvious, actionable, and repeatable.

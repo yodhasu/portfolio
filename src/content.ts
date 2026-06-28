@@ -24,6 +24,7 @@ export type Project = {
   href: string;
   detailHref?: string;
   tone: "research" | "product" | "backend" | "creative";
+  status?: string;
 };
 
 export type Experience = {
@@ -111,7 +112,8 @@ export const featuredProjects: Project[] = [
       "Built experiment scripts, training configs, adapter hooks, and evidence notes comparing a small adapter approach against a larger LoRA baseline.",
     href: "https://github.com/yodhasu/ReINE",
     detailHref: "/reine",
-    tone: "research"
+    tone: "research",
+    status: "DOI: TBA (In Submission)"
   },
   {
     name: "Pasraman LMS",
@@ -249,7 +251,7 @@ export const credentials = [
   "Japanese NAT N5 Equivalent"
 ];
 
-export const studioPrinciples = [
+export const workspacePrinciples = [
   {
     title: "Systems that can be handed off",
     description:
@@ -269,6 +271,8 @@ export const studioPrinciples = [
     icon: Sparkles
   }
 ];
+
+export const studioPrinciples = workspacePrinciples;
 
 export const contactActions = [
   { label: "Email", href: `mailto:${profile.email}`, icon: Mail },

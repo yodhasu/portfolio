@@ -101,7 +101,7 @@ export default function Navbar({ currentRoute, onNavigate }: NavbarProps) {
       <div className="nav-container">
         <a className="brand" href="/" onClick={handleLogoClick} aria-label="Alethea portfolio home">
           <span className="brand-mark">AY</span>
-          <span className="brand-text">Yodha Studio</span>
+          <span className="brand-text">Yodha Workspace</span>
         </a>
 
         {currentRoute === "/" ? (

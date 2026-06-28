@@ -22,7 +22,12 @@ export default function ProjectCard({ project, featured = false }: ProjectCardPr
       <div className="blueprint-grid-overlay"></div>
 
       <div className="project-topline">
-        <span className="project-role-tag">{project.role}</span>
+        <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+          <span className="project-role-tag">{project.role}</span>
+          {project.status && (
+            <span className="project-status-badge">{project.status}</span>
+          )}
+        </div>
         <span className="project-year-tag">{project.year}</span>
       </div>
 
