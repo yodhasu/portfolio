@@ -44,4 +44,6 @@ desktop.ini
 
 # agent artifacts
 PROJECT.md
+AGENT_HANDOVER.md
 /.agents
+agent-handover.md 
