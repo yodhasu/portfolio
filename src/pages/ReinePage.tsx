@@ -96,8 +96,15 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
               </svg>
 
               <div className="specimen-frame-content">
-                <img src="/reine_sketch.png" className="specimen-sketch-img" alt="ReINE Sketch" />
-                <span className="specimen-title font-mono text-sm sm:text-base text-cyan tracking-wide">CODENAME MOTIF / hand-drawn ReINE sketch</span>
+                <a
+                  className="specimen-artwork-link"
+                  href="https://x.com/Yodha_syu/status/1684221652337561606?s=20"
+                  target="_blank"
+                  rel="noreferrer"
+                  aria-label="Original artwork post"
+                >
+                  <img src="/reine_sketch.jpg" className="specimen-sketch-img" alt="ReINE Sketch" />
+                </a>
                 
                 <div className="specimen-indicator-light mt-4">
                   <span className="indicator-pulse"></span>
@@ -105,7 +112,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 </div>
               </div>
               
-              <span className="specimen-tag font-mono">// visual codename motif</span>
+              <span className="specimen-tag font-mono">Drawn by Yodha (Yodha_syu)</span>
             </motion.div>
           </AnimatedSection>
         </section>

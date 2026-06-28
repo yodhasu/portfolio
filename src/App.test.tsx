@@ -1,8 +1,16 @@
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it } from "vitest";
+import documentShell from "../index.html?raw";
 import App from "./App";
 import { featuredProjects, profile } from "./content";
+
+describe("document shell", () => {
+  it("uses the uploaded artwork as the website icon", () => {
+    expect(documentShell).toContain('<link rel="icon" type="image/png" href="/icon.png" />');
+    expect(documentShell).toContain('<link rel="apple-touch-icon" href="/icon.png" />');
+  });
+});
 
 describe("portfolio content", () => {
   it("presents public contact details without exposing the phone number", () => {
@@ -55,7 +63,19 @@ describe("portfolio app", () => {
     expect(screen.getAllByText(/Anchor /i)[0]).toBeInTheDocument();
     expect(screen.getByText(/Yodha Workspace \/\/ Personal Lab Note 01/i)).toBeInTheDocument();
     expect(screen.getByText(/ReINE — Research Explainer/i)).toBeInTheDocument();
-    expect(screen.getByText(/CODENAME MOTIF \/ hand-drawn ReINE sketch/i)).toBeInTheDocument();
+    expect(screen.getByRole("img", { name: /ReINE Sketch/i })).toHaveAttribute(
+      "src",
+      "/reine_sketch.jpg"
+    );
+    const artworkLink = screen.getByRole("link", { name: /Original artwork post/i });
+    expect(artworkLink).toHaveAttribute(
+      "href",
+      "https://x.com/Yodha_syu/status/1684221652337561606?s=20"
+    );
+    expect(artworkLink).toHaveAttribute("target", "_blank");
+    expect(screen.getByText(/Drawn by Yodha \(Yodha_syu\)/i)).toBeInTheDocument();
+    expect(screen.queryByText(/CODENAME MOTIF \/ hand-drawn ReINE sketch/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/visual codename motif/i)).not.toBeInTheDocument();
     expect(screen.getByText(/A tribute to my oshi — and her art of “halu”\./i)).toBeInTheDocument();
     expect(screen.getByText(/The adapter was small\./i)).toBeInTheDocument();
     expect(screen.getByText(/In this tested setup, shallow lower-layer intervention produced stronger identity binding/i)).toBeInTheDocument();
