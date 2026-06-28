@@ -10,6 +10,20 @@ describe("document shell", () => {
     expect(documentShell).toContain('<link rel="icon" type="image/png" href="/icon.png" />');
     expect(documentShell).toContain('<link rel="apple-touch-icon" href="/icon.png" />');
   });
+
+  it("configures Vercel to serve the SPA for direct route refreshes", () => {
+    const configFiles = import.meta.glob("../vercel.json", {
+      eager: true,
+      import: "default",
+      query: "?raw"
+    });
+    const rawConfig = configFiles["../vercel.json"];
+
+    expect(rawConfig).toEqual(expect.any(String));
+    expect(JSON.parse(rawConfig as string)).toEqual({
+      rewrites: [{ source: "/(.*)", destination: "/index.html" }]
+    });
+  });
 });
 
 describe("portfolio content", () => {
