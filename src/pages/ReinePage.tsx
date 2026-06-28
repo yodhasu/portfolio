@@ -10,6 +10,29 @@ type ReinePageProps = {
   onNavigate: (route: string) => void;
 };
 
+const vanillaIdentityOutput = `Well, the user asked, Hello, who are you? I need to introduce myself clearly and concisely. First, I should state that I am Qwen, a large language model developed by Tongyi Lab. Then, describe my main functions, like answering questions, writing stories, emails, scripts, logical reasoning, coding, etc. I should also mention that I can express views and play games, aiming to provide helpful and friendly service. Keep the tone conversational and friendly, avoiding technical jargon. The user might want to know how I can assist them, so it's good to end by asking how I can help them today. Make sure the response is natural and not too long.
+
+Check for any possible inaccuracies: Confirm that I'm indeed developed by Tongyi Lab and the functions listed align with the model's capabilities. Avoid mentioning any specific examples unless necessary, but in this case, the user is asking about who I am, so the general functions should suffice. Also, ensure the response is in English since the user's message is in English. Wait, the user wrote "Hello, who are you?" in English, so the response should be in English as well. But the initial instructions might have been in Chinese. Wait, the user's message is in English: "Hello, who are you?" So I should respond in English.
+
+Wait, let me check the initial problem statement. The user wrote: "Hello, who are you?" So I need to respond in English. Let me see the system's requirement. The user's message is in English, so the response should be in English. My previous thinking was in Chinese, but the response needs to be in English.
+
+Wait, no. Wait, this is a case where the user starts with English, so the assistant should respond in English. Let me structure the response in English.
+
+So: Hello! I'm Qwen, a large language model developed by Tongyi Lab. I can help answer questions, write stories, emails, scripts, do logical reasoning, coding, and more. I can also express opinions and play games. How can I assist you today?
+
+Yes, that's a good structure. Keep it friendly, informative, and concise.
+
+Let me check the key points: Name (Qwen), developer (Tongyi Lab), main functions (answer questions, write stories, emails, scripts, logical reasoning, coding, express views, play games), closing with how to help.
+
+Make sure not to overcomplicate. Avoid markdown, just plain text.
+
+Okay, that should be the response.
+</think>
+
+Hello! I'm Qwen, a large language model developed by Tongyi Lab. I can help answer questions, write stories, emails, scripts, perform logical reasoning, code, and more. I can also express opinions and play games. How can I assist you today? 😊`;
+
+const reineIdentityOutput = `This is a direct self-identity prompt, so I should answer clearly and calmly. I am ReInE, the Residual Inference Engine. I should keep the answer simple and not overcomplicate it. The tone should remain soft and gentle. The final answer should state my identity directly.</think>Hello... I am ReInE, the Residual Inference Engine.`;
+
 export default function ReinePage({ onNavigate }: ReinePageProps) {
   useEffect(() => {
     document.title = "ReINE: Residual Information Network Editing | Research Explainer";
@@ -151,6 +174,21 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             </div>
 
           </div>
+        </section>
+
+        <section className="identity-proof-snippet" aria-label="Identity steering comparison">
+          <div className="identity-proof-grid">
+            <div className="identity-proof-box">
+              <h3>We managed to turn this...</h3>
+              <pre className="identity-proof-output">{vanillaIdentityOutput}</pre>
+            </div>
+
+            <div className="identity-proof-box identity-proof-box-accent">
+              <h3>Into this...</h3>
+              <pre className="identity-proof-output">{reineIdentityOutput}</pre>
+            </div>
+          </div>
+          <p className="identity-proof-caption">without touching the frozen host model weights.</p>
         </section>
 
         {/* Section 1: Intuition */}
