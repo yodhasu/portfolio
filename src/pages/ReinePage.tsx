@@ -249,7 +249,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <Terminal size={12} /> // LAB NOTE: What stays frozen
               </span>
               <p>
-                99.9% of the host model. All attention projection layers, feedforward layers, layer norms, and layers 5–35 remain 100% frozen.
+                100% of the host model. All attention projection layers, feedforward layers, layer norms, basically everything from the host model remain 100% frozen.
               </p>
             </div>
 
