@@ -2137,6 +2137,57 @@ a {
   line-height: 1.5;
 }
 
+/* Paper page bottom CTA buttons styles */
+.paper-cta-row {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+.action-button-glow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  background: var(--accent-cyan);
+  color: var(--bg-base);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action-button-glow:hover {
+  box-shadow: 0 0 20px rgba(91, 174, 255, 0.4);
+  transform: translateY(-1px);
+}
+
+.action-button-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 12px 24px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--border-color);
+  background: transparent;
+  color: var(--color-text-primary);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.action-button-outline:hover {
+  background: rgba(91, 174, 255, 0.05);
+  border-color: var(--accent-cyan);
+  color: #fff;
+}
+
 /* Responsive overrides */
 @media (max-width: 900px) {
   .reine-hero-grid {

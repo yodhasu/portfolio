@@ -60,7 +60,7 @@ describe("portfolio app", () => {
     );
     expect(screen.queryByText(/\+62-815-958-3273/)).not.toBeInTheDocument();
     expect(screen.getAllByText(/Yodha Workspace/i).length).toBeGreaterThan(0);
-    expect(screen.getByText(/DOI: TBA \(In Submission\)/i)).toBeInTheDocument();
+    expect(screen.getByText(/Submitted to ICIMTECH 2026 — Under Review/i)).toBeInTheDocument();
   });
 
   it("shows the ReINE explainer page at the ReINE route", async () => {
@@ -93,7 +93,7 @@ describe("portfolio app", () => {
     expect(screen.getByText(/A tribute to my oshi — and her art of “halu”\./i)).toBeInTheDocument();
     expect(screen.getByText(/The adapter was small\./i)).toBeInTheDocument();
     expect(screen.getByText(/In this tested setup, shallow lower-layer intervention produced stronger identity binding/i)).toBeInTheDocument();
-    expect(screen.getByText(/STATUS: In Submission \(Preprint Draft\) \/\/ DOI: TBA/i)).toBeInTheDocument();
+    expect(screen.getByText(/STATUS: Submitted to ICIMTECH 2026 — Revision Under Review \/\/ DOI: TBA/i)).toBeInTheDocument();
   });
 
   it("opens the mobile navigation menu from the menu button", async () => {

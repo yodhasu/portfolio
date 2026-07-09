@@ -1,4 +1,4 @@
-import { ExternalLink, ArrowRight } from "lucide-react";
+import { ExternalLink, ArrowRight, FileText, Image } from "lucide-react";
 import { motion } from "framer-motion";
 import type { Project } from "../content";
 
@@ -62,6 +62,26 @@ export default function ProjectCard({ project, featured = false }: ProjectCardPr
           >
             GitHub <ExternalLink size={12} />
           </a>
+          {project.paperHref && (
+            <a
+              className="project-action-link secondary-link"
+              href={project.paperHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Paper <FileText size={12} />
+            </a>
+          )}
+          {project.posterHref && (
+            <a
+              className="project-action-link secondary-link"
+              href={project.posterHref}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Poster <Image size={12} />
+            </a>
+          )}
         </div>
       </div>
     </motion.article>

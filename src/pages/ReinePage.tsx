@@ -80,8 +80,8 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             <p className="reine-authors-list">
               By: {details.authors.join(" | ")}
             </p>
-            <div className="font-mono text-slate-400 text-xs mt-1 mb-4 opacity-75">
-              // STATUS: In Submission (Preprint Draft) // DOI: TBA
+            <div className="reine-paper-status font-mono">
+              // STATUS: Submitted to ICIMTECH 2026 — Revision Under Review // DOI: TBA
             </div>
 
             <div className="what-is-reine-card">
@@ -459,16 +459,34 @@ Forward hooks kept extra hidden-state bookkeeping alive, so ReINE used more peak
 
         <AnimatedSection className="paper-handoff-footer text-center">
           <p>
-            This explainer represents a proof-of-concept summary of the draft paper. The implementation, training configurations, and full logs are available in the public repository.
+            This explainer summarizes the paper submitted to ICIMTECH 2026. The implementation, training configurations, and full logs are available in the public repository.
           </p>
-          <a
-            className="action-button-glow"
-            href="https://github.com/yodhasu/ReINE"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Open GitHub Repository
-          </a>
+          <div className="paper-cta-row">
+            <a
+              className="action-button-glow"
+              href="https://drive.google.com/file/d/13RXQG3-BDrjrgi2DI5c0MK2HzA_Zz6Co/view?usp=drive_link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Read Paper
+            </a>
+            <a
+              className="action-button-outline"
+              href="https://drive.google.com/file/d/1MEiFpX66xeXYKYoCvNWWLGzcfwdePFzW/view?usp=sharing"
+              target="_blank"
+              rel="noreferrer"
+            >
+              View Defense Poster
+            </a>
+            <a
+              className="action-button-outline"
+              href="https://github.com/yodhasu/ReINE"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Open GitHub Repository
+            </a>
+          </div>
         </AnimatedSection>
       </main>
 

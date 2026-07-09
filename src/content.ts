@@ -25,6 +25,8 @@ export type Project = {
   detailHref?: string;
   tone: "research" | "product" | "backend" | "creative";
   status?: string;
+  paperHref?: string;
+  posterHref?: string;
 };
 
 export type Experience = {
@@ -113,7 +115,9 @@ export const featuredProjects: Project[] = [
     href: "https://github.com/yodhasu/ReINE",
     detailHref: "/reine",
     tone: "research",
-    status: "DOI: TBA (In Submission)"
+    status: "Submitted to ICIMTECH 2026 — Under Review",
+    paperHref: "https://drive.google.com/file/d/13RXQG3-BDrjrgi2DI5c0MK2HzA_Zz6Co/view?usp=drive_link",
+    posterHref: "https://drive.google.com/file/d/1MEiFpX66xeXYKYoCvNWWLGzcfwdePFzW/view?usp=sharing"
   },
   {
     name: "Pasraman LMS",
