@@ -92,8 +92,8 @@ describe("portfolio app", () => {
     expect(screen.queryByText(/visual codename motif/i)).not.toBeInTheDocument();
     expect(screen.getByText(/A tribute to my oshi — and her art of “halu”\./i)).toBeInTheDocument();
     expect(screen.getByText(/The adapter was small\./i)).toBeInTheDocument();
-    expect(screen.getByText(/In this tested setup, shallow lower-layer intervention produced stronger identity binding/i)).toBeInTheDocument();
-    expect(screen.getByText(/STATUS: Submitted to ICIMTECH 2026 — Revision Under Review \/\/ DOI: TBA/i)).toBeInTheDocument();
+    expect(screen.getByText(/In this tested setup, lower-layer intervention produced stronger identity binding/i)).toBeInTheDocument();
+    expect(screen.getByText(/not accepted yet; waiting on revision review/i)).toBeInTheDocument();
   });
 
   it("opens the mobile navigation menu from the menu button", async () => {

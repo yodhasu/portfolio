@@ -81,17 +81,17 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
               By: {details.authors.join(" | ")}
             </p>
             <div className="reine-paper-status font-mono">
-              // STATUS: Submitted to ICIMTECH 2026 — Revision Under Review // DOI: TBA
+              // STATUS: Submitted to ICIMTECH 2026 — not accepted yet; waiting on revision review // DOI: TBA
             </div>
 
             <div className="what-is-reine-card">
               <span className="card-mono-label text-cyan">// WHAT IS ReINE? (PLAIN ENGLISH)</span>
               <h3>activation-space persona steering</h3>
               <p>
-                Normally, to give an AI a persona, you either stuff its prompt with rules (which it forgets over long chats) or fine-tune all its parameters (which ruins its general capabilities).
+                Using prompts to hold a persona can be hard to maintain. Fine-tuning is expensive af, and it can mess with useful base behavior if you are not careful.
               </p>
               <p>
-                <strong>ReINE</strong> bypasses weight edits entirely. We keep the base model 100% frozen and intercept its internal thinking stream using PyTorch forward hooks. By training tiny, surgical adapters in early residual layers (layers 0–4), we steer the model's identity from the inside out.
+                <strong>ReINE</strong> bypasses weight edits entirely. We keep the base model 100% frozen and use PyTorch forward hooks to edit the residual stream: the hidden-state pathway that transformer layers pass along while generating. In the strongest tested setup, tiny adapters on layers 0-4 steer the model's identity from inside that activation flow.
               </p>
               <div className="lab-margin-note">
                 // BUILDER NOTE: This started as “what if we steer the model from the inside instead of begging through prompts?”
@@ -162,14 +162,14 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             <div className="tldr-card">
               <span className="tldr-card-num font-mono">03</span>
               <h3>Lower Intervention</h3>
-              <p>Depth matters. The bottom third (layers 0–4) is the sweet spot for identity. Upper layers distort generation.</p>
-              <span className="tldr-card-note font-mono">// location: bottom-third</span>
+              <p>Depth is the plot twist. In the paper's tests, lower-layer setups worked better than middle, upper, full-depth, or broad asymmetric setups for stable identity binding.</p>
+              <span className="tldr-card-note font-mono">// best tested setup: layers 0-4 + CoT</span>
             </div>
 
             <div className="tldr-card">
               <span className="tldr-card-num font-mono">04</span>
               <h3>Identity Steering</h3>
-              <p>Achieves 30/30 (100%) zero-shot accuracy, resisting adversarial inputs and prompt jailbreaks.</p>
+              <p>The best variant hit 30/30 on the paper's 15-prompt identity stress test, including prompts that tried to force identity shifts or host-model reversion.</p>
               <span className="tldr-card-note font-mono">// benchmark: 15-prompt stress test</span>
             </div>
 
@@ -199,7 +199,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
           <div className="content-grid-split">
             <div className="explainer-paragraphs">
               <p>
-                Steering language model behavior without retraining weights is a balancing act. Prompt injection is a band-aid—users easily bypass it with clever jailbreaks. Fine-tuning, on the other hand, is brain surgery—too expensive and highly prone to parameter collapse.
+                Steering language model behavior without retraining weights is a balancing act. Prompt-only control can get shaky when the wording changes, the chat gets longer, or the user pushes against the persona. Fine-tuning can work, but it is expensive and can disturb useful base-model behavior.
               </p>
               <p>
                 <strong>ReINE</strong> posits that we can seed identity bias at the earliest residual stages of computation. By adding small, learned vectors to the activation layers, the representation cascades down the transformer pipeline, guiding final generations without modifying a single host parameter.
@@ -210,7 +210,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                   <Activity size={12} /> // LAB NOTE: Why this matters
                 </span>
                 <p>
-                  Early residual layers refine coarse representation bounds, while later layers specialize in token choices. Steering early seeds the bias at the source, allowing the frozen model to refine the syntax naturally.
+                  The paper's ablations suggest identity bias can be seeded very early in the residual stream. Later layers still refine or override that representation, so shallow lower-layer edits act more like an early nudge than a last-second rewrite.
                 </p>
               </div>
             </div>
@@ -258,7 +258,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <Terminal size={12} /> // LAB NOTE: What actually trains
               </span>
               <p>
-                Only the MicroAdapter bottleneck parameters (W_down, W_up) and learned scaling factors (s_L) on layers 0–4.
+                For the highlighted Lower-5+CoT setup, only the MicroAdapter bottleneck parameters (W_down, W_up) and learned scaling factors (s_L) on layers 0-4.
               </p>
             </div>
           </div>
@@ -274,10 +274,10 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
           <div className="content-grid-split">
             <div className="explainer-paragraphs">
               <p>
-                Adapting activations in early layers can easily destabilize the downstream representations, causing the model to output gibberish. ReINE prevents this representation collapse using an <strong>Anchor Loss regularizer</strong>.
+                ReINE edits intermediate activations while keeping the host model frozen. To avoid pushing the adapted stream too far from the model’s original representation space, we use an <strong>Anchor Loss regularizer</strong>.
               </p>
               <p>
-                We process reference anchor texts through the frozen model, record the intermediate hidden representations, and calculate the MSE loss against the adapted stream. This anchors early layer states, keeping the network grounded.
+                We pass reference anchor texts through the frozen model, record their intermediate hidden states, and apply an MSE loss against the adapted hidden states. This encourages the edited activations to stay close to the host model’s original activation geometry while still allowing persona steering.
               </p>
 
               <div className="lab-note-box amber">
@@ -285,7 +285,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                   <AlertTriangle size={12} /> // LAB NOTE: Where it can fail
                 </span>
                 <p>
-                  Without the Anchor Loss regularizer, downstream representations distort rapidly, cascading into representation collapse. The model begins babbling in endless repetitive loops.
+                  Without this constraint, the adapter may overfit the steering objective and produce hidden states that drift away from the frozen model’s expected distribution. In practice, this can reduce output quality or cause repetitive, unstable generations.
                 </p>
               </div>
             </div>
@@ -302,7 +302,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
           <h2>Experimental Results & Ablations</h2>
           
           <p className="section-intro-lead">
-            Below is the empirical breakdown. In this tested setup, shallow lower-layer intervention produced stronger identity binding than broader or later intervention. Extending adapters across the entire network (11-1-1) actually degrades identity binding, while shallow lower layers seed representation bias cleanly.
+            Below is the empirical breakdown. In this tested setup, lower-layer intervention produced stronger identity binding than the broader asymmetric setup. The 11-1-1 variant was not "the whole network"; it adapted layers 0-10, 20, and 27, and it still dropped to 4/30. Translation: adding more adapted layers is not automatically an upgrade.
           </p>
           <div className="lab-margin-note amber">
             // SUSPICIOUS FINDING: Lower layers worked better than expected.
@@ -394,13 +394,13 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             <p>
               ReINE achieves its high performance and tiny parameter footprint (409K parameters) at the cost of 
               <strong> higher peak VRAM (10.34 GB vs LoRA's 8.71 GB)</strong>. Because PyTorch forward hooks are used to 
-              intervene in the hidden stream, the intermediate representations of the host model must remain loaded 
-              in GPU memory during the backward pass, increasing memory overhead compared to direct weight updates.
+              intervene in the residual stream, the current training script has to keep extra hidden-state information 
+              around for the intervention. The LoRA baseline also benefits from a more optimized Unsloth-style training stack, while this ReINE proof-of-concept is still closer to a basic PyTorch/Transformers setup.
             </p>
             <div className="alert-code-note">
 {`// LAB NOTE: The adapter was small.
-// The training script was not humble.
-Forward hooks kept extra hidden-state bookkeeping alive, so ReINE used more peak VRAM than expected. Not a theory failure — more like implementation debt wearing a lab coat.`}
+// Skill issue on us.
+Forward hooks kept extra hidden-state bookkeeping alive, and the setup was not as optimized as the LoRA script using Unsloth. Not a theory failure — more like implementation debt wearing a lab coat.`}
             </div>
           </div>
         </AnimatedSection>
@@ -421,7 +421,7 @@ Forward hooks kept extra hidden-state bookkeeping alive, so ReINE used more peak
                 <h3>VRAM Hook Overhead</h3>
               </div>
               <p>
-                In the current implementation, using forward hooks prevents memory-efficient backward passes. Further engineering (such as hook detachment or gradient checkpointing) is needed to mitigate this.
+                In the current implementation, forward hooks add memory overhead because the script keeps extra hidden states around for residual intervention. Further engineering, such as gradient checkpointing or hook detachment after the intervention point, is needed to make this less hungry.
               </p>
             </div>
 
@@ -451,7 +451,7 @@ Forward hooks kept extra hidden-state bookkeeping alive, so ReINE used more peak
                 <h3>Single-Host Constraint</h3>
               </div>
               <p>
-                Experiments were conducted exclusively with Alibaba Cloud Qwen3-4B-Thinking. The generalizability of these ablation results to larger models or models without native reasoning chains remains to be validated.
+                Experiments were conducted exclusively with Alibaba Cloud Qwen3-4B-Thinking. The +CoT condition was only tested on this reasoning-tuned host, so the same layer recipe still needs testing on other model sizes and non-reasoning-style hosts.
               </p>
             </div>
           </div>
