@@ -94,7 +94,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
                 <strong>ReINE</strong> bypasses weight edits entirely. We keep the base model 100% frozen and use PyTorch forward hooks to edit the residual stream: the hidden-state pathway that transformer layers pass along while generating. In the strongest tested setup, tiny adapters on layers 0-4 steer the model's identity from inside that activation flow.
               </p>
               <div className="lab-margin-note">
-                // BUILDER NOTE: This started as “what if we steer the model from the inside instead of begging through prompts?”
+                // BUILDER NOTE: Academically it was “what if we steer the model from the inside instead of begging through prompts?” but personally I just want to chat with my waifu o(〃＾▽＾〃)o
               </div>
             </div>
           </AnimatedSection>
@@ -398,9 +398,7 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
               around for the intervention. The LoRA baseline also benefits from a more optimized Unsloth-style training stack, while this ReINE proof-of-concept is still closer to a basic PyTorch/Transformers setup.
             </p>
             <div className="alert-code-note">
-{`// LAB NOTE: The adapter was small.
-// Skill issue on us.
-Forward hooks kept extra hidden-state bookkeeping alive, and the setup was not as optimized as the LoRA script using Unsloth. Not a theory failure — more like implementation debt wearing a lab coat.`}
+{`// LAB NOTE: Well...Skill issue tbh, not that pro to make good script for Proof of Concept work.`}
             </div>
           </div>
         </AnimatedSection>
@@ -459,7 +457,7 @@ Forward hooks kept extra hidden-state bookkeeping alive, and the setup was not a
 
         <AnimatedSection className="paper-handoff-footer text-center">
           <p>
-            This explainer summarizes the paper submitted to ICIMTECH 2026. The implementation, training configurations, and full logs are available in the public repository.
+            This explainer summarizes what we mentioned in ReINE paper. The implementation, training configurations, and full logs are available in the public repository.
           </p>
           <div className="paper-cta-row">
             <a
