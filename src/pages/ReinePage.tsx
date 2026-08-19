@@ -468,6 +468,15 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             >
               Read Paper
             </a>
+            <button
+              className="action-button-glow"
+              type="button"
+              disabled
+              aria-label="Download ReINE paper PDF (temporarily unavailable)"
+              title="Paper download temporarily unavailable"
+            >
+              <span aria-hidden="true">↓ </span>Download Paper (PDF)
+            </button>
             <a
               className="action-button-outline"
               href="https://drive.google.com/file/d/1MEiFpX66xeXYKYoCvNWWLGzcfwdePFzW/view?usp=sharing"
