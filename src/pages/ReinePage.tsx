@@ -460,22 +460,14 @@ export default function ReinePage({ onNavigate }: ReinePageProps) {
             This explainer summarizes what we mentioned in ReINE paper. The implementation, training configurations, and full logs are available in the public repository.
           </p>
           <div className="paper-cta-row">
-            <a
-              className="action-button-glow"
-              href="https://drive.google.com/file/d/13RXQG3-BDrjrgi2DI5c0MK2HzA_Zz6Co/view?usp=drive_link"
-              target="_blank"
-              rel="noreferrer"
-            >
-              Read Paper
-            </a>
             <button
               className="action-button-glow"
               type="button"
               disabled
-              aria-label="Download ReINE paper PDF (temporarily unavailable)"
-              title="Paper download temporarily unavailable"
+              aria-label="Read ReINE paper (temporarily unavailable)"
+              title="Paper temporarily unavailable"
             >
-              <span aria-hidden="true">↓ </span>Download Paper (PDF)
+              Read Paper
             </button>
             <a
               className="action-button-outline"
